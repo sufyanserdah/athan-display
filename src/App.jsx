@@ -122,36 +122,44 @@ function AppContent() {
         />
       )}
 
-      <div className="relative z-10 flex w-full max-w-6xl flex-1 flex-col items-center gap-6 pb-28 pt-2 sm:gap-8 sm:pb-32">
-        <DateDisplay
-          now={now}
-          hijri={data?.hijri}
-          gregorian={data?.gregorian}
-        />
+      <div className="athan-dash relative z-10 flex w-full max-w-6xl flex-1 flex-col items-center gap-6 pb-28 pt-2 sm:gap-8 sm:pb-32">
+        <div className="athan-dash__meta flex w-full flex-col items-center gap-2">
+          <DateDisplay
+            now={now}
+            hijri={data?.hijri}
+            gregorian={data?.gregorian}
+          />
 
-        {error && (
-          <p
-            className="mx-4 rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-2 text-center text-sm text-red-200"
-            role="alert"
-          >
-            {error} — showing cache if available.
-          </p>
-        )}
+          {error && (
+            <p
+              className="mx-4 rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-2 text-center text-sm text-red-200"
+              role="alert"
+            >
+              {error} — showing cache if available.
+            </p>
+          )}
 
-        {loading && !data && (
-          <p className={light ? 'text-masjid-accent' : 'text-masjid-muted'}>
-            Loading prayer times…
-          </p>
-        )}
+          {loading && !data && (
+            <p className={light ? 'text-masjid-accent' : 'text-masjid-muted'}>
+              Loading prayer times…
+            </p>
+          )}
+        </div>
 
-        <Clock now={now} />
+        <div className="athan-dash__clock flex w-full shrink-0 justify-center">
+          <Clock now={now} />
+        </div>
 
-        <Countdown now={now} nextPrayer={next} />
+        <div className="athan-dash__countdown w-full">
+          <Countdown now={now} nextPrayer={next} />
+        </div>
 
-        <PrayerTimes
-          schedule={todaySchedule}
-          nextPrayerKey={nextPrayerKey}
-        />
+        <div className="athan-dash__prayers w-full min-h-0">
+          <PrayerTimes
+            schedule={todaySchedule}
+            nextPrayerKey={nextPrayerKey}
+          />
+        </div>
       </div>
 
       <button

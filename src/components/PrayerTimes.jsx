@@ -18,7 +18,7 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
   }
 
   return (
-    <ul className="grid w-full max-w-5xl grid-cols-2 gap-3 px-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-6 md:px-4">
+    <ul className="athan-prayer-grid grid w-full max-w-5xl grid-cols-2 gap-3 px-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-6 md:px-4">
       {schedule.map(({ key, label, date }) => {
         const isNext = key === nextPrayerKey
         const baseCard =
@@ -41,7 +41,7 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
                 {label}
               </h3>
               <p
-                className={`mt-2 font-mono text-2xl font-semibold tabular-nums sm:text-3xl ${
+                className={`athan-prayer-time mt-2 font-mono text-2xl font-semibold tabular-nums sm:text-3xl ${
                   isNext
                     ? 'text-masjid-gold'
                     : light

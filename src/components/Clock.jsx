@@ -12,7 +12,7 @@ export function Clock({ now }) {
 
   return (
     <div
-      className="select-none text-center leading-none"
+      className="athan-clock select-none text-center leading-none"
       aria-live="polite"
       aria-atomic="true"
     >
