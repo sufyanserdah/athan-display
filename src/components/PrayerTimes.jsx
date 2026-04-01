@@ -8,7 +8,7 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
   if (!schedule?.length) {
     return (
       <div
-        className={`flex min-h-[120px] items-center justify-center text-lg ${
+        className={`flex min-h-[140px] items-center justify-center text-2xl sm:text-3xl ${
           light ? 'text-masjid-accent' : 'text-masjid-muted'
         }`}
       >
@@ -18,11 +18,11 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
   }
 
   return (
-    <ul className="athan-prayer-grid grid w-full max-w-5xl grid-cols-2 gap-4 px-3 sm:grid-cols-3 sm:gap-5 md:grid-cols-6 md:px-4">
+    <ul className="athan-prayer-grid grid w-full max-w-5xl grid-cols-2 gap-4 px-2 sm:grid-cols-3 sm:gap-5 sm:px-3 md:grid-cols-6 md:gap-4 md:px-3 lg:gap-5">
       {schedule.map(({ key, label, date }) => {
         const isNext = key === nextPrayerKey
         const baseCard =
-          'rounded-xl border px-4 py-5 text-center shadow-sm transition-colors sm:px-5 sm:py-6'
+          'rounded-xl border px-3 py-6 text-center shadow-sm transition-colors sm:px-5 sm:py-7 md:px-3 md:py-5 lg:px-4 lg:py-6'
         const nextCard = light
           ? 'border-masjid-accent bg-masjid-light-surface ring-2 ring-masjid-accent/35'
           : 'border-masjid-gold bg-masjid-surface/90 ring-2 ring-masjid-gold/40'
@@ -34,14 +34,14 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
           <li key={key}>
             <article className={`${baseCard} ${isNext ? nextCard : idleCard}`}>
               <h3
-                className={`text-lg font-semibold sm:text-xl ${
+                className={
                   light ? 'text-masjid-accent' : 'text-masjid-muted'
-                }`}
+                }
               >
                 {label}
               </h3>
               <p
-                className={`athan-prayer-time mt-2 font-mono text-3xl font-semibold tabular-nums sm:text-4xl ${
+                className={`athan-prayer-time mt-2 font-mono tabular-nums tracking-tight ${
                   isNext
                     ? 'text-masjid-gold'
                     : light

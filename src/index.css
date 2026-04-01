@@ -61,6 +61,19 @@ html.theme-light body {
   color: var(--color-masjid-light-text);
 }
 
+/* Prayer cards: large type for readability (landscape media block overrides below) */
+.athan-prayer-grid h3 {
+  font-size: clamp(1.25rem, 4.5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.athan-prayer-grid .athan-prayer-time {
+  font-size: clamp(2.75rem, 12vw, 6rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
 /*
  * Phone / tablet landscape: two columns — info + 3×2 prayers | big clock.
  * Wider max-height so more devices pick this up; max-width avoids desktop browsers.
@@ -188,8 +201,8 @@ html.theme-light body {
 
   .athan-dash__countdown p {
     min-height: 0;
-    font-size: clamp(1rem, 3vmin, 1.25rem) !important;
-    line-height: 1.35;
+    font-size: clamp(1.35rem, 4.8vmin, 2.1rem) !important;
+    line-height: 1.3;
     text-align: center;
   }
 
@@ -236,13 +249,13 @@ html.theme-light body {
   }
 
   .athan-prayer-grid h3 {
-    font-size: clamp(0.9rem, 3.2vmin, 1.1rem) !important;
+    font-size: clamp(1.05rem, 3.8vmin, 1.55rem) !important;
     line-height: 1.2;
   }
 
   .athan-prayer-grid .athan-prayer-time {
     margin-top: 0.25rem !important;
-    font-size: clamp(1.2rem, 4.6vmin, 1.85rem) !important;
-    line-height: 1.15;
+    font-size: clamp(1.85rem, 7.5vmin, 3.25rem) !important;
+    line-height: 1.1;
   }
 }
