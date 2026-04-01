@@ -91,12 +91,24 @@ html.theme-light body {
   }
 
   .athan-dash__meta header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    padding-top: 0;
+  }
+
+  .athan-dash__meta .athan-dash__dates {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     text-align: left;
-    padding-top: 0;
     gap: 0.35rem 1rem;
+  }
+
+  .athan-dash__meta .athan-dash__city {
+    text-align: left !important;
+    font-size: 0.95rem !important;
+    line-height: 1.25;
   }
 
   .athan-clock time {

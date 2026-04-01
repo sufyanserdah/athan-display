@@ -99,11 +99,9 @@ export function LocationPicker({
           aria-describedby="location-search-hint"
         />
         <p id="location-search-hint" className={`text-xs ${mutedClass}`}>
-          Include province or country for Canadian areas (e.g.{' '}
-          <span className="whitespace-nowrap">North York, Ontario</span>
-          ). If your neighbourhood is not listed, choose{' '}
-          <strong className="font-medium">Toronto</strong> — prayer times match
-          the GTA. Data from{' '}
+          Type <span className="whitespace-nowrap">North York</span> for the
+          Toronto district (the map database often has no separate entry). Add
+          Ontario/Canada for other cities if needed. Data from{' '}
           <a
             href="https://open-meteo.com/"
             target="_blank"

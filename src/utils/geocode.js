@@ -1,6 +1,41 @@
 const GEO_BASE = 'https://geocoding-api.open-meteo.com/v1/search'
 
 /**
+ * Places users expect but Open-Meteo/GeoNames often lack as a searchable "city" name
+ * (e.g. North York was amalgamated into Toronto — no top-level record, so the API
+ * returns US "North York" towns instead). We pin sensible coordinates for prayer times.
+ */
+const NORTH_YORK_TORONTO = {
+  id: 'curated-north-york-toronto-on',
+  name: 'North York',
+  latitude: 43.7617,
+  longitude: -79.4111,
+  country_code: 'CA',
+  country: 'Canada',
+  admin1: 'Ontario',
+  admin2: 'Toronto',
+  admin3: 'North York',
+  timezone: 'America/Toronto',
+}
+
+function wantsCanadianNorthYork(q) {
+  if (!/\bnorth york\b/i.test(q)) return false
+  const s = q.toLowerCase()
+  if (
+    /\b(pennsylvania|wisconsin|united states|u\.s\.a\.|usa)\b/.test(s) ||
+    /\bnorth yorks\b/.test(s)
+  ) {
+    return false
+  }
+  return true
+}
+
+function curatedResultsForQuery(q) {
+  if (wantsCanadianNorthYork(q)) return [{ ...NORTH_YORK_TORONTO }]
+  return []
+}
+
+/**
  * Guess ISO country from free text (Canadian cities often need this so "North York"
  * is not confused with US places of the same name).
  * @param {string} q
@@ -9,7 +44,7 @@ const GEO_BASE = 'https://geocoding-api.open-meteo.com/v1/search'
 function inferCountryCode(q) {
   const s = q.toLowerCase()
   if (
-    /\b(ontario|canada|toronto|gta|north york|etobicoke|scarborough|mississauga|brampton|markham|vaughan|richmond hill|oakville|hamilton|ottawa|vancouver|montreal|quebec city|winnipeg|calgary|edmonton|halifax|saskatoon|regina|pei|prince edward island|newfoundland|nova scotia|new brunswick|manitoba|saskatchewan|alberta|british columbia|québec|quebec)\b/.test(
+    /\b(ontario|canada|toronto|gta|etobicoke|scarborough|mississauga|brampton|markham|vaughan|richmond hill|oakville|hamilton|ottawa|vancouver|montreal|quebec city|winnipeg|calgary|edmonton|halifax|saskatoon|regina|pei|prince edward island|newfoundland|nova scotia|new brunswick|manitoba|saskatchewan|alberta|british columbia|québec|quebec)\b/.test(
       s,
     ) ||
     /\bon\s*,/i.test(q) ||
@@ -75,7 +110,8 @@ export async function searchPlaces(query, options = {}) {
   const q = query.trim()
   if (q.length < 2) return []
 
-  const cc = inferCountryCode(q)
+  const curated = curatedResultsForQuery(q)
+  const cc = inferCountryCode(q) ?? (wantsCanadianNorthYork(q) ? 'CA' : null)
   const want = Math.max(limit, 12)
 
   const batches = []
@@ -97,7 +133,7 @@ export async function searchPlaces(query, options = {}) {
   })
   batches.push(...broad)
 
-  let merged = dedupeById(batches)
+  let merged = dedupeById([...curated, ...batches])
   merged = prioritizeCountry(merged, cc)
 
   const hasCa = merged.some((r) => r.country_code === 'CA')
