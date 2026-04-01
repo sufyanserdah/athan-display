@@ -1,0 +1,136 @@
+# Athan Display — PWA Prayer Times & Athan Player
+
+## Project Overview
+A Progressive Web App that turns an LG V50 ThinQ into a dedicated Islamic prayer times display and athan player. The phone stays plugged in and mounted in the living room, running fullscreen 24/7.
+
+## Tech Stack
+- **Framework:** React 18 + Vite
+- **Styling:** Tailwind CSS (utility-first, no separate CSS files)
+- **Prayer Times:** Aladhan API (free, no API key) — https://api.aladhan.com/v1
+- **Audio:** HTML5 Audio API for athan playback
+- **State:** React Context + localStorage for settings persistence
+- **PWA:** manifest.json + service worker for offline support
+- **Deployment:** Vercel (static hosting, auto-deploy from GitHub)
+
+## Design Requirements
+- **Target device:** LG V50 ThinQ (1080x2340px, 6.4" OLED)
+- **Viewing distance:** 3-5 meters across a living room
+- **Always-on:** Screen stays on 24/7 while charging
+- **Dark theme:** Dark green/black background (#0B1D0F base) to reduce OLED burn-in
+- **Large text:** Clock should be massive (8-10rem), prayer times readable from across room
+- **Minimal interaction:** Parents should never need to touch the phone after setup
+- **Islamic aesthetic:** Subtle geometric patterns or gradients, green/gold accent colors
+
+## Color Palette
+- Background: #0B1D0F (very dark green)
+- Primary text: #E8F5E9 (light green-white)
+- Accent: #2D6A4F (medium green)
+- Highlight (next prayer): #FFD700 (gold)
+- Secondary text: #81C784 (muted green)
+- Card/surface: #1B4332 (dark green)
+
+## API Integration — Aladhan
+- **Endpoint:** GET https://api.aladhan.com/v1/timings/{DD-MM-YYYY}?latitude=43.8384&longitude=-79.0868&method=2
+- **Default location:** Pickering, ON, Canada (lat: 43.8384, lng: -79.0868)
+- **Default method:** 2 (ISNA — Islamic Society of North America)
+- **Available methods:** 1=Karachi, 2=ISNA, 3=MWL, 4=Umm Al-Qura, 5=Egyptian
+- **Response includes:** Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha times + Hijri date
+- **Caching:** Fetch once per day at midnight or on app launch, store in localStorage
+- **Pre-fetch:** Get next day's times at 11:00 PM
+- **Fallback:** Use cached data if API fails
+
+## Prayers to Display
+1. Fajr (dawn prayer)
+2. Sunrise (not a prayer, but important reference time)
+3. Dhuhr (noon prayer)
+4. Asr (afternoon prayer)
+5. Maghrib (sunset prayer)
+6. Isha (night prayer)
+
+## Athan Audio System
+- Store MP3 files in public/audio/ (fajr.mp3, regular.mp3)
+- Fajr gets a distinct athan sound from the other 4 prayers
+- Sunrise does NOT get an athan
+- Check time match every 15 seconds via setInterval
+- Track which prayers have been called today to prevent duplicate playback
+- Reset the "played" flags at midnight
+- IMPORTANT: Browser autoplay policy requires user interaction first. Show a one-time "Tap to Enable Athan" overlay on first visit. Once tapped, audio is unlocked for the session.
+
+## Settings (persisted in localStorage)
+- Calculation method (dropdown: ISNA default, MWL, Egyptian, Umm Al-Qura, Karachi)
+- Location (city display + manual latitude/longitude fields)
+- Athan enabled/disabled per prayer
+- Volume slider
+- Athan sound selection (if multiple files available)
+- Theme toggle (dark/light — dark is default)
+
+## Project Structure
+```
+athan-display/
+├── public/
+│   ├── audio/          # athan MP3 files
+│   ├── icons/          # PWA icons (192x192, 512x512)
+│   └── manifest.json   # PWA manifest
+├── src/
+│   ├── components/
+│   │   ├── Clock.jsx           # Live digital clock
+│   │   ├── PrayerTimes.jsx     # All prayer time cards
+│   │   ├── Countdown.jsx       # Next prayer countdown
+│   │   ├── DateDisplay.jsx     # Gregorian + Hijri dates
+│   │   ├── Settings.jsx        # Settings panel
+│   │   ├── AthanPlayer.jsx     # Audio playback controller
+│   │   └── EnableSound.jsx     # One-time audio unlock overlay
+│   ├── hooks/
+│   │   ├── usePrayerTimes.js   # API fetch + caching
+│   │   ├── useAthan.js         # Athan scheduling + playback
+│   │   └── useClock.js         # Live time state
+│   ├── context/
+│   │   └── SettingsContext.jsx  # Global settings state
+│   ├── utils/
+│   │   ├── api.js              # Aladhan API calls
+│   │   └── timeUtils.js        # Time formatting/comparison helpers
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css               # Tailwind directives + minimal global styles
+├── .cursorrules                # This file
+├── vite.config.js
+├── tailwind.config.js
+└── package.json
+```
+
+## Code Conventions
+- Functional components only (no class components)
+- Use hooks for all state and side effects
+- Tailwind for all styling — no separate CSS files per component
+- Single-file components (no splitting into .jsx + .css)
+- Use async/await for API calls (no .then chains)
+- Destructure props and state
+- Use semantic HTML where possible
+- Comments for non-obvious logic (especially time calculations and athan scheduling)
+
+## Screen Layout (Main Display)
+```
+┌─────────────────────────────────┐
+│  Mon, Apr 1, 2026   7 Shawwal   │  ← Date bar
+│                                  │
+│                                  │
+│           10:42               │  ← Large clock (massive font)
+│                                  │
+│      Dhuhr in 1h 23m            │  ← Next prayer countdown
+│                                  │
+│ ┌─────┬─────┬─────┬─────┬─────┐ │
+│ │Fajr │Dhuhr│ Asr │Magh │Isha │ │  ← Prayer times row
+│ │5:42 │12:05│3:31 │7:12 │8:32 │ │     (next one highlighted gold)
+│ └─────┴─────┴─────┴─────┴─────┘ │
+│                            ⚙    │  ← Settings gear (subtle)
+└─────────────────────────────────┘
+```
+
+## Critical Reminders
+- The phone is in PORTRAIT orientation
+- Dark theme by default to prevent OLED burn-in
+- All times are in 12-hour format with AM/PM (North American convention)
+- The app must work offline after first load (service worker caches everything)
+- Test on Chrome Android — that's the browser the LG V50 will use
+- Settings gear should be very subtle — parents won't need it day-to-day
+- Prevent screen from requesting sleep via Wake Lock API if available

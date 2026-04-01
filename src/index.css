@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-masjid-bg: #0b1d0f;
+  --color-masjid-surface: #1b4332;
+  --color-masjid-primary: #e8f5e9;
+  --color-masjid-muted: #81c784;
+  --color-masjid-accent: #2d6a4f;
+  --color-masjid-gold: #ffd700;
+  --color-masjid-light-bg: #f1f8f4;
+  --color-masjid-light-surface: #d8ede0;
+  --color-masjid-light-text: #0b1d0f;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  @apply antialiased;
+}
+
+/* Light theme: class on html from App */
+html.theme-light body {
+  background-color: var(--color-masjid-light-bg);
+  color: var(--color-masjid-light-text);
+}
