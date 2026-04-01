@@ -45,11 +45,11 @@ html.theme-light body {
 
   .athan-dash {
     display: grid;
-    grid-template-columns: minmax(0, 1.22fr) minmax(11rem, 0.78fr);
-    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(11rem, 0.85fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
     align-items: stretch;
     column-gap: 0;
-    row-gap: 0.35rem;
+    row-gap: 0.3rem;
     width: 100%;
     max-width: 100%;
     flex: 1;
@@ -62,27 +62,111 @@ html.theme-light body {
     overflow: hidden;
   }
 
-  .athan-dash__meta {
+  /* Full-height divider between columns */
+  .athan-dash::before {
+    content: '';
+    grid-column: 2;
+    grid-row: 1 / -1;
+    justify-self: start;
+    width: 0;
+    margin-left: 0;
+    border-left: 1px solid rgba(17, 153, 142, 0.35);
+    pointer-events: none;
+  }
+
+  html.theme-light .athan-dash::before {
+    border-left-color: rgba(17, 153, 142, 0.45);
+  }
+
+  .athan-dash__date-header {
+    display: contents;
+  }
+
+  .athan-dash__date-header > .athan-dash__dates {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    text-align: center;
+    padding-left: 0.85rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .athan-dash__date-header .athan-dash__dates p:first-of-type {
+    font-size: clamp(0.8rem, 2.2vmin, 1rem) !important;
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  .athan-dash__date-header .athan-dash__dates p:last-of-type {
+    font-size: clamp(0.72rem, 2vmin, 0.9rem) !important;
+    line-height: 1.2;
+    width: 100%;
+  }
+
+  .athan-dash__city-block {
     grid-column: 1;
     grid-row: 1;
     width: 100%;
     max-width: 100%;
-    align-items: flex-start;
+    align-self: start;
     text-align: left;
     padding-right: 0.85rem;
   }
 
-  .athan-dash__countdown {
-    grid-column: 1;
+  .athan-dash__city-block .athan-dash__city {
+    text-align: left !important;
+    font-size: 0.9rem !important;
+    line-height: 1.2;
+    margin-top: 0;
+  }
+
+  .athan-dash__city-block [role='alert'],
+  .athan-dash__city-block .mt-2.text-center {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .athan-dash__clock {
+    grid-column: 2;
     grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding-left: 0.85rem;
+  }
+
+  .athan-dash__countdown {
+    grid-column: 2;
+    grid-row: 3;
     width: 100%;
     max-width: 100%;
-    padding-right: 0.85rem;
+    min-height: 0;
+    padding-left: 0.85rem;
+    align-self: start;
+  }
+
+  .athan-dash__countdown p {
+    min-height: 0;
+    font-size: clamp(0.85rem, 2.5vmin, 1.05rem) !important;
+    line-height: 1.35;
+    text-align: center;
   }
 
   .athan-dash__prayers {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2 / 4;
     width: 100%;
     max-width: 100%;
     min-height: 0;
@@ -92,97 +176,44 @@ html.theme-light body {
     align-items: stretch;
   }
 
-  .athan-dash__clock {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-    padding-left: 0.85rem;
-    margin-left: 0.1rem;
-    border-left: 1px solid rgba(17, 153, 142, 0.35);
-  }
-
-  html.theme-light .athan-dash__clock {
-    border-left-color: rgba(17, 153, 142, 0.45);
-  }
-
-  .athan-dash__meta header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.2rem;
-    padding-top: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .athan-dash__meta .athan-dash__dates {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    text-align: left;
-    gap: 0.25rem 1rem;
-  }
-
-  .athan-dash__meta .athan-dash__dates p:first-of-type {
-    font-size: 0.95rem !important;
-    line-height: 1.25;
-  }
-
-  .athan-dash__meta .athan-dash__dates p:last-of-type {
-    font-size: 0.85rem !important;
-  }
-
-  .athan-dash__meta .athan-dash__city {
-    text-align: left !important;
-    font-size: 0.9rem !important;
-    line-height: 1.2;
-    margin-top: 0.05rem;
-  }
-
-  /* vmin balances short height + wide width */
+  /* Larger clock in the time column */
   .athan-clock time {
-    font-size: clamp(1.85rem, min(12vmin, 11svh + 4vw), 4.5rem) !important;
+    font-size: clamp(2.4rem, min(18vmin, 14svh + 5vw), 6.25rem) !important;
     line-height: 1 !important;
   }
 
-  .athan-dash__countdown p {
-    min-height: 0;
-    font-size: clamp(0.9rem, 2.8vmin, 1.1rem) !important;
-    line-height: 1.35;
-    text-align: left;
-  }
-
-  /* 3×2 grid: easier to read than six micro-columns */
+  /* 2×3 grid (two columns, three rows) — larger cells */
   .athan-prayer-grid {
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(2, minmax(0, auto)) !important;
-    gap: 0.45rem !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.55rem !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     max-width: 100% !important;
     width: 100%;
-    align-content: center;
-  }
-
-  .athan-prayer-grid article {
-    padding: 0.45rem 0.35rem !important;
-    border-radius: 0.6rem;
+    align-content: stretch;
     min-height: 0;
   }
 
+  .athan-prayer-grid article {
+    padding: 0.55rem 0.45rem !important;
+    border-radius: 0.65rem;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .athan-prayer-grid h3 {
-    font-size: clamp(0.68rem, 2.4vmin, 0.8rem) !important;
+    font-size: clamp(0.78rem, 2.8vmin, 0.95rem) !important;
     line-height: 1.2;
   }
 
   .athan-prayer-grid .athan-prayer-time {
-    margin-top: 0.2rem !important;
-    font-size: clamp(0.95rem, 3.5vmin, 1.35rem) !important;
-    line-height: 1.2;
+    margin-top: 0.25rem !important;
+    font-size: clamp(1.05rem, 4vmin, 1.55rem) !important;
+    line-height: 1.15;
   }
 }

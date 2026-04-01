@@ -123,28 +123,32 @@ function AppContent() {
       )}
 
       <div className="athan-dash relative z-10 flex w-full max-w-6xl flex-1 flex-col items-center gap-6 pb-28 pt-2 sm:gap-8 sm:pb-32">
-        <div className="athan-dash__meta flex w-full flex-col items-center gap-2">
-          <DateDisplay
-            now={now}
-            hijri={data?.hijri}
-            gregorian={data?.gregorian}
-          />
-
-          {error && (
-            <p
-              className="mx-4 rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-2 text-center text-sm text-red-200"
-              role="alert"
-            >
-              {error} — showing cache if available.
-            </p>
-          )}
-
-          {loading && !data && (
-            <p className={light ? 'text-masjid-accent' : 'text-masjid-muted'}>
-              Loading prayer times…
-            </p>
-          )}
-        </div>
+        <DateDisplay
+          now={now}
+          hijri={data?.hijri}
+          gregorian={data?.gregorian}
+          alerts={
+            <>
+              {error && (
+                <p
+                  className="mx-4 mt-2 rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-2 text-center text-sm text-red-200"
+                  role="alert"
+                >
+                  {error} — showing cache if available.
+                </p>
+              )}
+              {loading && !data && (
+                <p
+                  className={`mt-2 text-center ${
+                    light ? 'text-masjid-accent' : 'text-masjid-muted'
+                  }`}
+                >
+                  Loading prayer times…
+                </p>
+              )}
+            </>
+          }
+        />
 
         <div className="athan-dash__clock flex w-full shrink-0 justify-center">
           <Clock now={now} />
