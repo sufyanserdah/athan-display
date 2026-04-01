@@ -34,24 +34,30 @@ html.theme-light body {
 }
 
 /*
- * Phone / narrow landscape: short viewport height. Side-by-side clock + rest
- * so the clock does not use full width (18vw becomes enormous in landscape).
+ * Phone / tablet landscape: two columns — info + 3×2 prayers | big clock.
+ * Wider max-height so more devices pick this up; max-width avoids desktop browsers.
  */
-@media (orientation: landscape) and (max-height: 540px) {
+@media (orientation: landscape) and (max-height: 640px) and (max-width: 1200px) {
+  .athan-root {
+    min-height: 100dvh;
+    min-height: 100svh;
+  }
+
   .athan-dash {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-columns: minmax(0, 1.22fr) minmax(11rem, 0.78fr);
     grid-template-rows: auto auto minmax(0, 1fr);
-    align-items: center;
-    column-gap: 0.75rem;
-    row-gap: 0.2rem;
+    align-items: stretch;
+    column-gap: 0;
+    row-gap: 0.35rem;
     width: 100%;
     max-width: 100%;
     flex: 1;
     min-height: 0;
-    padding-bottom: max(3.25rem, env(safe-area-inset-bottom));
-    padding-top: max(0.25rem, env(safe-area-inset-top));
-    padding-left: max(0.5rem, env(safe-area-inset-left));
+    align-self: stretch;
+    padding-bottom: max(2.75rem, env(safe-area-inset-bottom));
+    padding-top: max(0.35rem, env(safe-area-inset-top));
+    padding-left: max(0.75rem, env(safe-area-inset-left));
     padding-right: max(0.5rem, env(safe-area-inset-right));
     overflow: hidden;
   }
@@ -60,41 +66,57 @@ html.theme-light body {
     grid-column: 1;
     grid-row: 1;
     width: 100%;
+    max-width: 100%;
     align-items: flex-start;
     text-align: left;
-  }
-
-  .athan-dash__clock {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    align-self: center;
-    justify-self: center;
-    width: 100%;
-    max-height: min(92vh, 100%);
-    min-height: 0;
+    padding-right: 0.85rem;
   }
 
   .athan-dash__countdown {
     grid-column: 1;
     grid-row: 2;
     width: 100%;
+    max-width: 100%;
+    padding-right: 0.85rem;
   }
 
   .athan-dash__prayers {
     grid-column: 1;
     grid-row: 3;
     width: 100%;
+    max-width: 100%;
     min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+    padding-right: 0.85rem;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .athan-dash__clock {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding-left: 0.85rem;
+    margin-left: 0.1rem;
+    border-left: 1px solid rgba(17, 153, 142, 0.35);
+  }
+
+  html.theme-light .athan-dash__clock {
+    border-left-color: rgba(17, 153, 142, 0.45);
   }
 
   .athan-dash__meta header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.15rem;
+    gap: 0.2rem;
     padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .athan-dash__meta .athan-dash__dates {
@@ -102,47 +124,65 @@ html.theme-light body {
     flex-wrap: wrap;
     justify-content: flex-start;
     text-align: left;
-    gap: 0.35rem 1rem;
+    gap: 0.25rem 1rem;
   }
 
-  .athan-dash__meta .athan-dash__city {
-    text-align: left !important;
+  .athan-dash__meta .athan-dash__dates p:first-of-type {
     font-size: 0.95rem !important;
     line-height: 1.25;
   }
 
+  .athan-dash__meta .athan-dash__dates p:last-of-type {
+    font-size: 0.85rem !important;
+  }
+
+  .athan-dash__meta .athan-dash__city {
+    text-align: left !important;
+    font-size: 0.9rem !important;
+    line-height: 1.2;
+    margin-top: 0.05rem;
+  }
+
+  /* vmin balances short height + wide width */
   .athan-clock time {
-    font-size: clamp(1.75rem, min(26svh, 20vw), 5rem) !important;
+    font-size: clamp(1.85rem, min(12vmin, 11svh + 4vw), 4.5rem) !important;
+    line-height: 1 !important;
   }
 
   .athan-dash__countdown p {
-    min-height: 1.25rem;
-    font-size: 1rem !important;
-    line-height: 1.3;
+    min-height: 0;
+    font-size: clamp(0.9rem, 2.8vmin, 1.1rem) !important;
+    line-height: 1.35;
     text-align: left;
   }
 
+  /* 3×2 grid: easier to read than six micro-columns */
   .athan-prayer-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-    gap: 0.3rem !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, minmax(0, auto)) !important;
+    gap: 0.45rem !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     max-width: 100% !important;
+    width: 100%;
+    align-content: center;
   }
 
   .athan-prayer-grid article {
-    padding: 0.35rem 0.25rem !important;
-    border-radius: 0.5rem;
+    padding: 0.45rem 0.35rem !important;
+    border-radius: 0.6rem;
+    min-height: 0;
   }
 
   .athan-prayer-grid h3 {
-    font-size: 0.65rem !important;
+    font-size: clamp(0.68rem, 2.4vmin, 0.8rem) !important;
     line-height: 1.2;
   }
 
   .athan-prayer-grid .athan-prayer-time {
-    margin-top: 0.15rem !important;
-    font-size: 0.95rem !important;
-    line-height: 1.15;
+    margin-top: 0.2rem !important;
+    font-size: clamp(0.95rem, 3.5vmin, 1.35rem) !important;
+    line-height: 1.2;
   }
 }

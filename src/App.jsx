@@ -88,7 +88,7 @@ function AppContent() {
 
   return (
     <div
-      className={`relative flex min-h-full flex-col items-center ${
+      className={`athan-root relative flex min-h-full min-h-dvh flex-col items-center ${
         light ? 'bg-masjid-light-bg' : 'bg-masjid-bg'
       }`}
     >
