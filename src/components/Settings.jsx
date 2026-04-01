@@ -273,7 +273,7 @@ export function Settings({ onClose, athanRef, onSoundVerified }) {
                     )
                   } catch {
                     setTestHint(
-                      'Could not play. Check public/audio/regular1.mp3, regular2.mp3, regular3.mp3',
+                      'Could not play. Check public/audio/regular.mp3, regular2.mp3, regular3.mp3',
                     )
                   }
                 }}

@@ -1,6 +1,6 @@
 /** Filenames in `public/audio/`. Fajr stays `fajr.mp3`. */
 export const REGULAR_ATHAN_OPTIONS = [
-  { id: '1', label: 'Regular adhan 1', file: 'regular1.mp3' },
+  { id: '1', label: 'Regular adhan 1', file: 'regular.mp3' },
   { id: '2', label: 'Regular adhan 2', file: 'regular2.mp3' },
   { id: '3', label: 'Regular adhan 3', file: 'regular3.mp3' },
 ]
