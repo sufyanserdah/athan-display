@@ -8,7 +8,7 @@ export function Countdown({ now, nextPrayer }) {
   if (!nextPrayer) {
     return (
       <p
-        className={`min-h-[2rem] text-center text-xl ${
+        className={`min-h-[2.5rem] text-center text-2xl ${
           light ? 'text-masjid-accent' : 'text-masjid-muted'
         }`}
       >
@@ -22,7 +22,7 @@ export function Countdown({ now, nextPrayer }) {
 
   return (
     <p
-      className={`min-h-[2rem] text-center text-2xl font-medium sm:text-3xl ${
+      className={`min-h-[2.5rem] text-center text-3xl font-medium sm:text-4xl ${
         light ? 'text-masjid-accent' : 'text-masjid-muted'
       }`}
       aria-live="polite"

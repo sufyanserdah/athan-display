@@ -3,10 +3,10 @@
   "short_name": "Athan",
   "description": "Prayer times and athan display for home",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#052220",
   "theme_color": "#052220",
-  "orientation": "portrait",
+  "orientation": "any",
   "icons": [
     {
       "src": "/favicon.svg",

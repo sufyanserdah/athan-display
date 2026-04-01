@@ -88,7 +88,7 @@ function AppContent() {
 
   return (
     <div
-      className={`athan-root relative flex min-h-full min-h-dvh flex-col items-center ${
+      className={`athan-root relative flex w-full min-h-full min-h-dvh flex-1 flex-col items-center ${
         light ? 'bg-masjid-light-bg' : 'bg-masjid-bg'
       }`}
     >
@@ -122,7 +122,7 @@ function AppContent() {
         />
       )}
 
-      <div className="athan-dash relative z-10 flex w-full max-w-6xl flex-1 flex-col items-center gap-6 pb-28 pt-2 sm:gap-8 sm:pb-32">
+      <div className="athan-dash relative z-10 flex w-full max-w-6xl flex-1 flex-col items-center gap-7 pb-28 pt-2 sm:gap-9 sm:pb-32">
         <DateDisplay
           now={now}
           hijri={data?.hijri}
@@ -131,7 +131,7 @@ function AppContent() {
             <>
               {error && (
                 <p
-                  className="mx-4 mt-2 rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-2 text-center text-sm text-red-200"
+                  className="mx-4 mt-2 rounded-lg border border-red-500/40 bg-red-950/40 px-4 py-2 text-center text-base text-red-200"
                   role="alert"
                 >
                   {error} — showing cache if available.
@@ -139,7 +139,7 @@ function AppContent() {
               )}
               {loading && !data && (
                 <p
-                  className={`mt-2 text-center ${
+                  className={`mt-2 text-center text-lg ${
                     light ? 'text-masjid-accent' : 'text-masjid-muted'
                   }`}
                 >

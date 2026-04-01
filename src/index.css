@@ -16,15 +16,43 @@
   --color-masjid-light-text: #052220;
 }
 
-html,
-body,
-#root {
+html {
   height: 100%;
   margin: 0;
+  /* Fill notched phones; iOS Safari */
+  min-height: 100dvh;
+  min-height: 100svh;
+  min-height: -webkit-fill-available;
 }
 
 body {
+  height: 100%;
+  min-height: 100dvh;
+  min-height: 100svh;
+  min-height: -webkit-fill-available;
+  margin: 0;
   @apply antialiased;
+}
+
+#root {
+  min-height: 100dvh;
+  min-height: 100svh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Slightly larger default type on phones / small tablets */
+@media (max-width: 768px) {
+  html {
+    font-size: 112.5%;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 118.75%;
+  }
 }
 
 /* Light theme: class on html from App */
@@ -41,6 +69,7 @@ html.theme-light body {
   .athan-root {
     min-height: 100dvh;
     min-height: 100svh;
+    min-height: -webkit-fill-available;
   }
 
   .athan-dash {
@@ -100,13 +129,13 @@ html.theme-light body {
   }
 
   .athan-dash__date-header .athan-dash__dates p:first-of-type {
-    font-size: clamp(0.8rem, 2.2vmin, 1rem) !important;
+    font-size: clamp(0.95rem, 2.6vmin, 1.2rem) !important;
     line-height: 1.2;
     width: 100%;
   }
 
   .athan-dash__date-header .athan-dash__dates p:last-of-type {
-    font-size: clamp(0.72rem, 2vmin, 0.9rem) !important;
+    font-size: clamp(0.85rem, 2.35vmin, 1.05rem) !important;
     line-height: 1.2;
     width: 100%;
   }
@@ -123,7 +152,7 @@ html.theme-light body {
 
   .athan-dash__city-block .athan-dash__city {
     text-align: left !important;
-    font-size: 0.9rem !important;
+    font-size: 1.05rem !important;
     line-height: 1.2;
     margin-top: 0;
   }
@@ -159,7 +188,7 @@ html.theme-light body {
 
   .athan-dash__countdown p {
     min-height: 0;
-    font-size: clamp(0.85rem, 2.5vmin, 1.05rem) !important;
+    font-size: clamp(1rem, 3vmin, 1.25rem) !important;
     line-height: 1.35;
     text-align: center;
   }
@@ -178,7 +207,7 @@ html.theme-light body {
 
   /* Larger clock in the time column */
   .athan-clock time {
-    font-size: clamp(2.4rem, min(18vmin, 14svh + 5vw), 6.25rem) !important;
+    font-size: clamp(2.85rem, min(22vmin, 16svh + 6vw), 7.5rem) !important;
     line-height: 1 !important;
   }
 
@@ -207,13 +236,13 @@ html.theme-light body {
   }
 
   .athan-prayer-grid h3 {
-    font-size: clamp(0.78rem, 2.8vmin, 0.95rem) !important;
+    font-size: clamp(0.9rem, 3.2vmin, 1.1rem) !important;
     line-height: 1.2;
   }
 
   .athan-prayer-grid .athan-prayer-time {
     margin-top: 0.25rem !important;
-    font-size: clamp(1.05rem, 4vmin, 1.55rem) !important;
+    font-size: clamp(1.2rem, 4.6vmin, 1.85rem) !important;
     line-height: 1.15;
   }
 }

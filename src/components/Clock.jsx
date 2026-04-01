@@ -18,7 +18,7 @@ export function Clock({ now }) {
     >
       <time
         dateTime={now.toISOString()}
-        className={`inline-flex items-baseline justify-center gap-2 font-mono text-[clamp(3.25rem,18vw,10rem)] font-semibold tracking-tighter tabular-nums ${
+        className={`inline-flex items-baseline justify-center gap-2 font-mono text-[clamp(4rem,22vw,12rem)] font-semibold tracking-tighter tabular-nums ${
           light ? 'text-masjid-light-text' : 'text-masjid-primary'
         }`}
       >

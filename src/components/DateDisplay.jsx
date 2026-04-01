@@ -37,14 +37,14 @@ export function DateDisplay({ now, hijri, gregorian, alerts = null }) {
     <header className="athan-dash__date-header flex w-full max-w-4xl flex-col items-stretch gap-1 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] sm:px-6">
       <div className="athan-dash__dates flex w-full flex-wrap items-center justify-between gap-2 text-center sm:gap-3">
         <p
-          className={`text-lg font-medium sm:text-xl ${
+          className={`text-xl font-medium sm:text-2xl ${
             light ? 'text-masjid-light-text' : 'text-masjid-primary'
           }`}
         >
           {left}
         </p>
         <p
-          className={`text-base sm:text-lg ${
+          className={`text-lg sm:text-xl ${
             light ? 'text-masjid-accent' : 'text-masjid-muted'
           }`}
         >
@@ -54,7 +54,7 @@ export function DateDisplay({ now, hijri, gregorian, alerts = null }) {
       <div className="athan-dash__city-block w-full">
         {city && (
           <p
-            className={`athan-dash__city text-center text-lg font-semibold tracking-wide sm:text-xl ${
+            className={`athan-dash__city text-center text-xl font-semibold tracking-wide sm:text-2xl ${
               light ? 'text-masjid-accent' : 'text-masjid-muted'
             }`}
             aria-label="Location"

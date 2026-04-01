@@ -31,11 +31,11 @@ export function EnableSound({ athanRef, onUnlocked }) {
             : 'border-masjid-accent/50 bg-masjid-surface text-masjid-primary'
         }`}
       >
-        <h2 id="enable-sound-title" className="text-xl font-semibold sm:text-2xl">
+        <h2 id="enable-sound-title" className="text-2xl font-semibold sm:text-3xl">
           Tap to enable athan
         </h2>
         <p
-          className={`mt-3 text-sm sm:text-base ${
+          className={`mt-3 text-base sm:text-lg ${
             light ? 'text-masjid-accent' : 'text-masjid-muted'
           }`}
         >

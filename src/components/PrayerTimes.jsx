@@ -8,7 +8,7 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
   if (!schedule?.length) {
     return (
       <div
-        className={`flex min-h-[120px] items-center justify-center ${
+        className={`flex min-h-[120px] items-center justify-center text-lg ${
           light ? 'text-masjid-accent' : 'text-masjid-muted'
         }`}
       >
@@ -18,11 +18,11 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
   }
 
   return (
-    <ul className="athan-prayer-grid grid w-full max-w-5xl grid-cols-2 gap-3 px-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-6 md:px-4">
+    <ul className="athan-prayer-grid grid w-full max-w-5xl grid-cols-2 gap-4 px-3 sm:grid-cols-3 sm:gap-5 md:grid-cols-6 md:px-4">
       {schedule.map(({ key, label, date }) => {
         const isNext = key === nextPrayerKey
         const baseCard =
-          'rounded-xl border px-3 py-4 text-center shadow-sm transition-colors'
+          'rounded-xl border px-4 py-5 text-center shadow-sm transition-colors sm:px-5 sm:py-6'
         const nextCard = light
           ? 'border-masjid-accent bg-masjid-light-surface ring-2 ring-masjid-accent/35'
           : 'border-masjid-gold bg-masjid-surface/90 ring-2 ring-masjid-gold/40'
@@ -34,14 +34,14 @@ export function PrayerTimes({ schedule, nextPrayerKey }) {
           <li key={key}>
             <article className={`${baseCard} ${isNext ? nextCard : idleCard}`}>
               <h3
-                className={`text-base font-semibold sm:text-lg ${
+                className={`text-lg font-semibold sm:text-xl ${
                   light ? 'text-masjid-accent' : 'text-masjid-muted'
                 }`}
               >
                 {label}
               </h3>
               <p
-                className={`athan-prayer-time mt-2 font-mono text-2xl font-semibold tabular-nums sm:text-3xl ${
+                className={`athan-prayer-time mt-2 font-mono text-3xl font-semibold tabular-nums sm:text-4xl ${
                   isNext
                     ? 'text-masjid-gold'
                     : light
