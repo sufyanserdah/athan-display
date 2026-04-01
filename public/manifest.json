@@ -4,8 +4,8 @@
   "description": "Prayer times and athan display for home",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0B1D0F",
-  "theme_color": "#0B1D0F",
+  "background_color": "#052220",
+  "theme_color": "#052220",
   "orientation": "portrait",
   "icons": [
     {

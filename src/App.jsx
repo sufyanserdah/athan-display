@@ -95,8 +95,8 @@ function AppContent() {
       <div
         className={`pointer-events-none absolute inset-0 ${
           light
-            ? 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(45,106,79,0.12),transparent_50%)]'
-            : 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(45,106,79,0.35),transparent_55%)]'
+            ? 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(17,153,142,0.14),transparent_50%)]'
+            : 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(17,153,142,0.38),transparent_55%)]'
         }`}
         aria-hidden
       />
