@@ -13,7 +13,7 @@ import { useClock } from './hooks/useClock'
 import { usePrayerTimes } from './hooks/usePrayerTimes'
 import { DEFAULT_REGULAR_ATHAN_ID } from './constants/regularAthanOptions'
 import { isAudioUnlocked } from './utils/audioUnlock'
-import { getNextPrayer } from './utils/timeUtils'
+import { getNextPrayer, isSolarDaytime } from './utils/timeUtils'
 
 function AppContent() {
   const { settings } = useSettings()
@@ -44,6 +44,11 @@ function AppContent() {
     return match ? next.key : null
   }, [next, todaySchedule])
 
+  const isSolarDay = useMemo(
+    () => isSolarDaytime(now, todaySchedule),
+    [now, todaySchedule],
+  )
+
   useAthan({
     todaySchedule,
     tomorrowSchedule,
@@ -59,6 +64,22 @@ function AppContent() {
       settings.theme === 'light',
     )
   }, [settings.theme])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('solar-day', isSolarDay)
+    return () => document.documentElement.classList.remove('solar-day')
+  }, [isSolarDay])
+
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (!meta) return
+    const light = settings.theme === 'light'
+    if (isSolarDay) {
+      meta.setAttribute('content', light ? '#fff3d0' : '#e6a800')
+    } else {
+      meta.setAttribute('content', light ? '#f4fbfa' : '#052220')
+    }
+  }, [isSolarDay, settings.theme])
 
   useEffect(() => {
     const request = async () => {
@@ -86,18 +107,28 @@ function AppContent() {
 
   const light = settings.theme === 'light'
 
+  const rootSurface = isSolarDay
+    ? light
+      ? 'bg-[#fff3d0]'
+      : 'bg-[#e8b012]'
+    : light
+      ? 'bg-masjid-light-bg'
+      : 'bg-masjid-bg'
+
+  const rootOverlay = isSolarDay
+    ? light
+      ? 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(245,158,11,0.42),transparent_52%)]'
+      : 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,240,180,0.55),transparent_48%)]'
+    : light
+      ? 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(17,153,142,0.14),transparent_50%)]'
+      : 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(17,153,142,0.38),transparent_55%)]'
+
   return (
     <div
-      className={`athan-root relative flex w-full min-h-full min-h-dvh flex-1 flex-col items-center ${
-        light ? 'bg-masjid-light-bg' : 'bg-masjid-bg'
-      }`}
+      className={`athan-root relative flex w-full min-h-full min-h-dvh flex-1 flex-col items-center transition-[background-color] duration-700 ease-out ${rootSurface}`}
     >
       <div
-        className={`pointer-events-none absolute inset-0 ${
-          light
-            ? 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(17,153,142,0.14),transparent_50%)]'
-            : 'bg-[radial-gradient(ellipse_at_50%_0%,rgba(17,153,142,0.38),transparent_55%)]'
-        }`}
+        className={`pointer-events-none absolute inset-0 transition-[background] duration-700 ease-out ${rootOverlay}`}
         aria-hidden
       />
 

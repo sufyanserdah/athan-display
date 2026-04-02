@@ -81,6 +81,19 @@ export function buildPrayerSchedule(timings, ymd) {
  * @param {Array<{ key: string, label: string, athanType: string | null, date: Date }>} todaySchedule
  * @param {Array<{ key: string, label: string, athanType: string | null, date: Date }>} tomorrowSchedule
  */
+/**
+ * True while the sun is up for display purposes: from today's Sunrise until Maghrib
+ * (so the screen can switch to a bright daytime color vs night/dawn).
+ */
+export function isSolarDaytime(now, todaySchedule) {
+  if (!todaySchedule?.length) return false
+  const sunrise = todaySchedule.find((p) => p.key === 'Sunrise')?.date
+  const maghrib = todaySchedule.find((p) => p.key === 'Maghrib')?.date
+  if (!sunrise || !maghrib) return false
+  const t = now.getTime()
+  return t >= sunrise.getTime() && t < maghrib.getTime()
+}
+
 export function getNextPrayer(now, todaySchedule, tomorrowSchedule = []) {
   for (const p of todaySchedule) {
     if (p.date > now) return p
